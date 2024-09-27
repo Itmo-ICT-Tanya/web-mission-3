@@ -1,30 +1,17 @@
-# Mission 2
+# Mission 3
 
-## Part 0
+## Part 1 [Link to video](https://disk.yandex.ru/i/oxP9K0_7qs4A2w)
 
-[Link to video](https://disk.yandex.ru/i/-ryx162i_-ZqxQ)
+## Part 2  [Link to video](https://disk.yandex.ru/i/PJ1WcGfTOvBbBg)
 
-## Part1
+## Part 3
 
-- Вопрос 1	 
-SSH - это протокол, который шифрует всю передаваемую информацию по сети.
-Он используется для используют для безопасного обмена данными, удаленного входа в командную строку и удаленного выполнения команд.
+**Selects**
 
-- Вопрос 2	 
-Публичный ключ будет скопирован на сервер и добавлен в файл ~/.ssh/authorized_keys на сервере.  
+```sql SELECT username FROM users;```
 
-- Вопрос 3	 
-Long Polling и Webhooks - это методы, позволяющие получать обновления от сервера
+```sql SELECT users.username, COUNT(messages.id) AS number_of_sent_messages FROM users  LEFT JOIN messages ON users.id = messages.from GROUP BY users.username;```
 
-Механизм работы Long Polling заключается в следующем: 
-Клиент отправляет запрос на сервер, запрашивая данные. Сервер не отвечает сразу, а держит соединение открытым, он ожидает обновления или изменения данных, которые могут быть интересны клиенту. Когда появляются новые данные, сервер отправляет их клиенту и закрывает соединение.
-А механизм работы Webhooks вот такой:
-Клиент (получатель уведомлений) предоставляет серверу (отправителю) свой URL-адрес, на который сервер будет отправлять уведомления. Когда на сервере происходит какое-то событие (например, новый заказ, изменение данных, добавление комментария), сервер отправляет HTTP-запрос на указанный URL-адрес.
+```sql SELECT users.username, COUNT(messages.id) AS number_of_received_messages FROM users LEFT JOIN messages ON users.id = messages.to GROUP BY users.username ORDER BY number_of_received_messages DESC LIMIT 1;```
 
-- Вопрос 4	 
-Issue — это задача на доработку, описание какой-то проблемы пользователя, требования к процессу разработки или ошибки. https://github.com/Kanaries/Rath/issues/278
-https://github.com/RocketChat/Rocket.Chat/issues/33360
-https://github.com/mastodon/mastodon/issues/32049
-
-- Вопрос 5	 
-Cоздать в папке images пустой файл с любым именем.
+```sql SELECT AVG(sent_messages) AS average_sent_messages FROM ( SELECT COUNT(messages.id) AS sent_messages FROM users LEFT JOIN messages ON users.id = messages.from GROUP BY users.id ) AS message_counts;```
